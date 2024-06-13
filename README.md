@@ -1,4 +1,4 @@
-# Partner Innovatino Challenge 2024
+# Partner Innovation Challenge 2024
 
 This Repository is made for Cisco Partner Innovation Challenge 2024.
 
