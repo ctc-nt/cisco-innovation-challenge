@@ -1,0 +1,22 @@
+{
+    "id": "Y2lzY29zcGFyazovL3VzL1dFQkhPT0svZTg0YTY1ZjMtODExYS00YzA2LTk3NGYtMmQ2MWE0OTY3MjZm",
+    "name": "Webhook to Chatbot",
+    "targetUrl": "https://mistakenly-deciding-antelope.ngrok-free.app/message",
+    "resource": "messages",
+    "event": "created",
+    "orgId": "Y2lzY29zcGFyazovL3VzL09SR0FOSVpBVElPTi81ODQ3Njk4Ni01NDRiLTRjMTktYjU3Zi0wZDc2MzkxYjIwNzc",
+    "createdBy": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS8xZWQ3YThjOS03YzI0LTRkNTAtYTNkZi00YTBkYTFkNTdjMTQ",
+    "appId": "Y2lzY29zcGFyazovL3VzL0FQUExJQ0FUSU9OL0NmMzkyNWU5NDFmMzhhYTc0M2Y0MmFiNzcwZmZhZjFhNTIyMjcxZDI5OTQ4NDhjNjk2YWMwYTEwN2Q2YTg5MjI3",
+    "ownedBy": "creator",
+    "status": "active",
+    "created": "2024-07-29T07:00:35.907Z",
+    "actorId": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS8xZWQ3YThjOS03YzI0LTRkNTAtYTNkZi00YTBkYTFkNTdjMTQ",
+    "data": {
+        "id": "Y2lzY29zcGFyazovL3VzL01FU1NBR0UvOTdmYThkZTAtNGQ3Zi0xMWVmLTk0ZGItZDE2NzFkNzczNWZi",
+        "roomId": "Y2lzY29zcGFyazovL3VzL1JPT00vYTY0NWQ3ZjAtMWQ0OC0xMWVlLTgzNjctYmYxNmM1MjY5MTFh",
+        "roomType": "group",
+        "personId": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS8xZWQ3YThjOS03YzI0LTRkNTAtYTNkZi00YTBkYTFkNTdjMTQ",
+        "personEmail": "tomoya.watanabe@ctc-g.co.jp",
+        "created": "2024-07-29T07:53:07.774Z"
+    }
+}
