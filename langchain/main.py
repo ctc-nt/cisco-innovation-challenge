@@ -1,73 +1,62 @@
-import os
-import datetime
-import logging
-import argparse
-
-from langchain_community.document_loaders import GitLoader
+from langchain_community.vectorstores import Chroma
+from langchain_community.document_loaders import TextLoader
 from langchain.indexes import VectorstoreIndexCreator
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+
+import os
+import argparse
+import logging
+import datetime
+import logging
 
 lc_logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
-def create_vectorstore_from_git(url, branch, embedding, filter_func=None):
+def main(dir_path, model):
+    llm = ChatOpenAI(model_name=model, temperature=0.2)
 
-    loaders = [
-        GitLoader(
-            clone_url=url,
-            branch=branch,
-            repo_path=os.path.join("git-dir", os.path.basename(url)),
-            file_filter=filter_func,
-        ),
-    ]
+    embedding = OpenAIEmbeddings()
+
+    loaders = [TextLoader(f"{dir_path}/{file}") for file in os.listdir(dir_path)]
 
     lc_logger.info(f"START: {datetime.datetime.now()}")
 
-    vectorstoreindex = VectorstoreIndexCreator(
+    vsi = VectorstoreIndexCreator(
         vectorstore_cls=Chroma,
         embedding=embedding,
-        vectorstore_kwargs={
-            "persist_directory": "git-dir/{}.db".format(os.path.basename(url))
-        },
     ).from_loaders(loaders)
 
     lc_logger.info(f"END: {datetime.datetime.now()}")
 
-    return vectorstoreindex
+    continue_query = True
 
+    while continue_query:
+        質問 = input("質問は？")
 
-def main(url, branch, gpt_model, query):
-    embedding = OpenAIEmbeddings()
-    vsi = create_vectorstore_from_git(url=url, branch=branch, embedding=embedding)
-    llm = ChatOpenAI(model=gpt_model)
+        ans = vsi.query(質問, llm=llm)
 
-    answer = vsi.query(query, llm=llm)
+        print(ans)
 
-    print(answer)
+        if 質問 == "なし":
+            continue_query = False
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="与えられた Git URL から clone し、\nその内容についての質問に OpenAI LLM が回答します"
+        description="与えられた path 内の情報を事前情報として、インタラクティブに質問に回答します"
     )
     parser.add_argument(
-        "--model", default="gpt-4-turbo-preview", choices=["gpt-4-turbo-preview"]
+        "-m", "--model", default="gpt-4-turbo-preview", choices=["gpt-4-turbo-preview"]
     )
     parser.add_argument(
-        "--git-url",
-        help="インターネットから到達可能な public なリポジトリ",
+        "-d",
+        "--dir",
+        help="事前情報が格納されたディレクトリ",
         required=True,
     )
-    parser.add_argument("--git-branch", help="git branch", required=True)
-    parser.add_argument("--query", help="LLM への質問文", required=True)
 
     args = parser.parse_args()
 
-    main(
-        gpt_model=args.model,
-        url=args.git_url,
-        branch=args.git_branch,
-        query=args.query,
-    )
+    main(model=args.model, dir_path=args.dir)
