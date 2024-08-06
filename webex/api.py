@@ -18,12 +18,16 @@ def get_message(id: Dict):
     return response.json().get("text")
 
 
-def post_message(room_id, message: Dict):
+def post_message(room_id, format, message):
     url = f"https://webexapis.com/v1/messages/"
     payload = {
         "roomId": room_id,
-        "text": message,
     }
+    if format == "markdown":
+        payload["markdown"] = message
+    else:
+        payload["text"] = message
+
     response = requests.post(url, headers=headers, data=json.dumps(payload))
 
 
@@ -42,7 +46,7 @@ def post_card(room_id):
                     "body": [
                         {
                             "type": "TextBlock",
-                            "text": "Network AI Assistant",
+                            "text": "質問したい内容を入力してください",
                             "wrap": True,
                             "fontType": "Monospace",
                             "size": "ExtraLarge",
@@ -64,9 +68,9 @@ def post_card(room_id):
                         },
                         {
                             "type": "Input.Text",
-                            "placeholder": "Placeholder text",
+                            "placeholder": "質問を入力してください",
                             "id": "input",
-                            "value": "input your question",
+                            "value": "",
                         },
                     ],
                     "actions": [
@@ -105,4 +109,6 @@ async def cardAction(message: Dict):
         room_id = message.get("data").get("roomId")
         print(json.dumps(message, indent=2))
         response = get_attachment(message.get("data").get("id"))
-        post_message(room_id, f"Type is {response.get('type')}, Input is {response.get('input')}")
+        post_message(room_id, "text", f"わかりました！「{response.get('input')}」について調べます。少々お待ちください。")
+        response = requests.post("http://localhost:8001/query", json=response)
+        post_message(room_id, "markdown", response.json().get("answer"))
