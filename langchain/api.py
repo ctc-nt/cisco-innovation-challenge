@@ -5,16 +5,21 @@ from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 
 import os
-import argparse
 import logging
 import datetime
 import logging
+
+from fastapi import FastAPI
+from typing import Dict
 
 lc_logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
-def main(dir_path, model):
+
+app = FastAPI()
+
+def answer(query, dir_path, model):
     llm = ChatOpenAI(model_name=model, temperature=0.2)
 
     embedding = OpenAIEmbeddings()
@@ -30,33 +35,12 @@ def main(dir_path, model):
 
     lc_logger.info(f"END: {datetime.datetime.now()}")
 
-    continue_query = True
+    answer = vsi.query(query, llm=llm)
 
-    while continue_query:
-        質問 = input("質問は？")
+    print(answer)
+    return {"answer":answer}
 
-        ans = vsi.query(質問, llm=llm)
-
-        print(ans)
-
-        if 質問 == "なし":
-            continue_query = False
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="与えられた path 内の情報を事前情報として、インタラクティブに質問に回答します"
-    )
-    parser.add_argument(
-        "-m", "--model", default="gpt-4-turbo-preview", choices=["gpt-4-turbo-preview"]
-    )
-    parser.add_argument(
-        "-d",
-        "--dir",
-        help="事前情報が格納されたディレクトリ",
-        required=True,
-    )
-
-    args = parser.parse_args()
-
-    main(model=args.model, dir_path=args.dir)
+@app.post("/query")
+def query(body:Dict):
+    print(body)
+    return answer(body.get("input"), "base-knowledge", "gpt-4-turbo-preview")    
