@@ -96,7 +96,7 @@ def get_attachment(id: Dict):
 
 @app.post("/message")
 async def message(message: Dict):
-    if message.get("data").get("personEmail") != "ai-ctc@webex.bot":
+    if message.get("data").get("personEmail") != os.environ.get('bot_email'):
         room_id = message.get("data").get("roomId")
         print(json.dumps(message, indent=2))
         post_card(room_id)
@@ -105,7 +105,7 @@ async def message(message: Dict):
 
 @app.post("/cardAction")
 async def cardAction(message: Dict):
-    if message.get("data").get("personEmail") != "ai-ctc@webex.bot":
+    if message.get("data").get("personEmail") != os.environ.get('bot_email'):
         room_id = message.get("data").get("roomId")
         print(json.dumps(message, indent=2))
         response = get_attachment(message.get("data").get("id"))
