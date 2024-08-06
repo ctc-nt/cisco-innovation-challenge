@@ -26,69 +26,39 @@ Content-Type: application/json
   "event": "created"
 }
 
-###
 
-DELETE  https://webexapis.com/v1/webhooks/Y2lzY29zcGFyazovL3VzL1dFQkhPT0svZjliMWQ5N2UtNWQ0YS00NDhlLWEyMWEtYWVkNjAwODExNGE0
-Authorization: Bearer {{webex_token}}
-Content-Type: application/json
-
-
-
-###
+### get Webhook List
 
 
 GET  https://webexapis.com/v1/webhooks  
 Authorization: Bearer {{webex_token}}
 Content-Type: application/json
 
-###
 
+### get Webhook Detail
 
-GET  https://webexapis.com/v1/webhooks/Y2lzY29zcGFyazovL3VzL1dFQkhPT0svZTg0YTY1ZjMtODExYS00YzA2LTk3NGYtMmQ2MWE0OTY3MjZm
+DELETE  https://webexapis.com/v1/webhooks/Y2lzY29zcGFyazovL3VzL1dFQkhPT0svZjliMWQ5N2UtNWQ0YS00NDhlLWEyMWEtYWVkNjAwODExNGE0
 Authorization: Bearer {{webex_token}}
 Content-Type: application/json
 
-###
 
+### get Message Detail
 
 GET  https://webexapis.com/v1/messages?roomId=Y2lzY29zcGFyazovL3VzL1JPT00vYTY0NWQ3ZjAtMWQ0OC0xMWVlLTgzNjctYmYxNmM1MjY5MTFh
 Authorization: Bearer {{webex_token}}
 Content-Type: application/json
 
-
-###
-
-
-GET  https://webexapis.com/v1/messages/Y2lzY29zcGFyazovL3VzL01FU1NBR0UvZmQ1NWQ1MTAtNGQ4My0xMWVmLWIxM2YtYzdmNzE5Y2M5NGY2
-Authorization: Bearer {{webex_token}}
-Content-Type: application/json
-
-###
-
-POST  https://mistakenly-deciding-antelope.ngrok-free.app/message
-
-{
-    "id": 123,
-    "message" : "test"
-}
-
-### 
-
-GET  https://mistakenly-deciding-antelope.ngrok-free.app/test
-
-
-###
-
+### post Message
 POST  https://webexapis.com/v1/messages/
 Authorization: Bearer {{webex_token}}
 Content-Type: application/json
 
 {
     "roomId": "Y2lzY29zcGFyazovL3VzL1JPT00vYTY0NWQ3ZjAtMWQ0OC0xMWVlLTgzNjctYmYxNmM1MjY5MTFh",
-    "text": "I am the Bot!!"
+    "text": "I am a Bot!!"
 }
 
-### creating card
+### create card
 POST  https://webexapis.com/v1/messages/
 Authorization: Bearer {{webex_token}}
 Content-Type: application/json
