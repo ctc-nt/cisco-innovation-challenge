@@ -1,1 +1,3 @@
 git-dir
+*.pyc
+__pycache__
