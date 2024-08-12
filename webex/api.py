@@ -112,3 +112,5 @@ async def cardAction(message: Dict):
         post_message(room_id, "text", f"わかりました！「{response.get('input')}」について調べます。少々お待ちください。")
         response = requests.post("http://localhost:8001/query", json=response)
         post_message(room_id, "markdown", response.json().get("answer"))
+        if "https" in response.json().get("answer"):
+            post_message(room_id, "text", f"APIはこっから叩けるよ。まだだけど。({response.json().get('answer')})")
