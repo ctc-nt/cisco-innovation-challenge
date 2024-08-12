@@ -1,20 +1,21 @@
-# CTC network のオペレーション手順
+# Operation procedure in CTC network
 
 
-## 新規構築
+## New Deployment
 
-新規構築時は、CML を使います
+Use terraform to create Network VMs on CML if you would like to deploy new network.
 
 
-## 経路迂回
 
-経路迂回の際は、以下のオペレーションを実施します
+## Bypass Route
 
-迂回させるために、不安定なリンクを shutdown します。
+Perform the following operations when you need to bypass route.
 
-shutdown させるコマンドは、機器のソフトウェア種別によって異なります。
+In order to bypass route, first, you need to shutdown unstable link.
+The command to shutdown depends on the software type of device. 
 
-IOS の場合は、以下のコマンドを実行します
+
+The IOS case:
 
 ```
 configure terminal
@@ -22,7 +23,7 @@ interface X
 shutdown
 ```
 
-IOS XR の場合は、以下のコマンドを実行します
+The IOS XR case:
 
 ```
 configure
