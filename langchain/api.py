@@ -43,4 +43,4 @@ def answer(query, dir_path, model):
 @app.post("/query")
 def query(body:Dict):
     print(body)
-    return answer(body.get("input"), "base-knowledge", "gpt-4-turbo-preview")    
+    return answer(body.get("input"), "../knowledge", "gpt-4-turbo-preview")    
