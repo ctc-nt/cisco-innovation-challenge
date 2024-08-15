@@ -109,8 +109,8 @@ async def cardAction(message: Dict):
         room_id = message.get("data").get("roomId")
         print(json.dumps(message, indent=2))
         response = get_attachment(message.get("data").get("id"))
-        post_message(room_id, "text", f"わかりました！「{response.get('input')}」について調べます。少々お待ちください。")
-        response = requests.post("http://localhost:8001/query", json=response)
+        post_message(room_id, "markdown", f"Thank you for asking me！ I am generating answer regarding **{response.get('input')}**,  Stay Tune!!")
+        response = requests.post("http://langchain:8000/query", json=response)
         post_message(room_id, "markdown", response.json().get("answer"))
         if "https" in response.json().get("answer"):
             post_message(room_id, "text", f"APIはこっから叩けるよ。まだだけど。({response.json().get('answer')})")
