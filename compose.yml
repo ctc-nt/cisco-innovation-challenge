@@ -1,0 +1,45 @@
+version: '3'
+services:
+  webex:
+    build:
+      context: webex
+    ports:
+      - 8000:8000
+    volumes:
+      - type: bind
+        source: "webex"
+        target: "/app"
+    environment:
+      - webex_token
+      - bot_email
+  langchain:
+    build: 
+      context: langchain
+    ports:
+      - 8001:8000
+    volumes:
+      - type: bind
+        source: "langchain"
+        target: "/app"
+      - type: bind
+        source: "knowledge"
+        target: "/app/knowledge"
+      - type: bind
+        source: "langchain/.libs"
+        target: "/app/.libs"
+    environment:
+      - OPENAI_API_KEY
+      - LD_LIBRARY_PATH=/app/.libs/
+  pca:
+    build: 
+      context: PCA
+    ports:
+      - 8002:8000
+    volumes:
+      - type: bind
+        source: "PCA"
+        target: "/app"
+    environment:
+      - analytics_url
+      - accedian_user
+      - accedian_password
