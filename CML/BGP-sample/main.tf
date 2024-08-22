@@ -2,7 +2,6 @@ terraform {
   required_providers { 
     cml2 = { 
       source = "registry.terraform.io/ciscodevnet/cml2" 
-      version = "~> 0.7.0"
     } 
   } 
 } 
@@ -178,19 +177,19 @@ resource "cml2_link" "mgmt-link" {
 
 resource "cml2_lifecycle" "top" {
   lab_id = cml2_lab.cic.id
-  elements = [
-    cml2_node.r1.id,
-    cml2_node.r2.id,
-    cml2_node.r3.id,
-    cml2_node.mgmtsw.id,
-    cml2_node.ext.id,
-    cml2_link.l1.id,
-    cml2_link.l2.id,
-    cml2_link.l3.id,
-    cml2_link.o1.id,
-    cml2_link.o2.id,
-    cml2_link.o3.id,
-    cml2_link.mgmt-link.id,
+  depends_on = [
+    cml2_node.r1,
+    cml2_node.r2,
+    cml2_node.r3,
+    cml2_node.mgmtsw,
+    cml2_node.ext,
+    cml2_link.l1,
+    cml2_link.l2,
+    cml2_link.l3,
+    cml2_link.o1,
+    cml2_link.o2,
+    cml2_link.o3,
+    cml2_link.mgmt-link,
   ]
   state = "STARTED"
   wait = false
