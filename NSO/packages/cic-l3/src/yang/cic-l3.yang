@@ -1,0 +1,63 @@
+module cic-l3 {
+
+  namespace "http://example.com/cic-l3";
+  prefix cic-l3;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import tailf-common {
+    prefix tailf;
+  }
+  import tailf-ncs {
+    prefix ncs;
+  }
+
+  description
+    "Bla bla...";
+
+  revision 2016-01-01 {
+    description
+      "Initial revision.";
+  }
+
+  list cic-l3 {
+    description "This is an RFS skeleton service";
+
+    key name;
+    leaf name {
+      tailf:info "Unique service id";
+      tailf:cli-allow-range;
+      type string;
+    }
+
+    uses ncs:service-data;
+    ncs:servicepoint cic-l3-servicepoint;
+
+    // may replace this with other ways of refering to the devices.
+    leaf device1 {
+      type leafref {
+        path "/ncs:devices/ncs:device/ncs:name";
+      }
+    }
+    leaf device2 {
+      type leafref {
+        path "/ncs:devices/ncs:device/ncs:name";
+      }
+    }
+    leaf device3 {
+      type leafref {
+        path "/ncs:devices/ncs:device/ncs:name";
+      }
+    }
+    leaf ipv4-address-loopback-dev1{
+      type inet:ipv4-address;
+    }
+    leaf ipv4-address-loopback-dev2{
+      type inet:ipv4-address;
+    }
+    leaf ipv4-address-loopback-dev3{
+      type inet:ipv4-address;
+    }
+  }
+}
