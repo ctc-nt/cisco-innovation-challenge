@@ -45,7 +45,6 @@ services:
     container_name: langchain
     profiles:
       - prod
-      - ci
     ports:
       - 8001:8000
     volumes:
