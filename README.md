@@ -63,6 +63,7 @@ TF_VAR_cml_password=your_password
 TF_VAR_cml_user=your_user
 OPENAI_API_KEY=your_API_KEY
 NGROK_AUTHTOKEN=your_token
+NGROK_DOMAIN=your_domain : hoge.fuga.app, you don't need http:// and last /
 ```
 
 Run docker compose
