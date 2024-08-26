@@ -1,4 +1,4 @@
-@webex_token = YourToken
+@webex_token = {{$dotenv webex_token}}
 
 ### for message
 
