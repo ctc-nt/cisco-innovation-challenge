@@ -144,7 +144,5 @@ services:
     depends_on:
       webex:
         condition: service_healthy
-      langchain:
-        condition: service_healthy
       pca:
         condition: service_healthy    
