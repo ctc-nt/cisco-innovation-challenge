@@ -3,7 +3,7 @@ name: Test Actions
 on:
   push:
     branches:
-      - dev
+      - "*"
 
 jobs:
   build:
