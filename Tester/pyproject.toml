@@ -1,15 +1,15 @@
 [tool.poetry]
-name = "pca"
+name = "test"
 version = "0.1.0"
 description = ""
 authors = ["Tomoya Watanabe <tomoya.watanabe@ctc-g.co.jp>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
-fastapi = "^0.112.0"
-uvicorn = "^0.30.6"
+python = "^3.8"
+pytest = "^8.3.2"
 requests = "^2.32.3"
+pytest-robotframework = "^4.2.4"
 
 
 [build-system]

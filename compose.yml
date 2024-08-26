@@ -1,7 +1,7 @@
 version: '3'
+
 volumes:
   NSO-vol:
-
 
 services:
   webex:
@@ -19,6 +19,12 @@ services:
     environment:
       - webex_token
       - bot_email
+    healthcheck:
+      test: "curl localhost:8000 || exit 1"
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
   ngrok:
     image: ngrok/ngrok:latest
     container_name: ngrok
@@ -53,6 +59,12 @@ services:
     environment:
       - OPENAI_API_KEY
       - LD_LIBRARY_PATH=/app/.libs/
+    healthcheck:
+      test: "curl localhost:8000 || exit 1"
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
   pca:
     build:
       context: PCA
@@ -69,6 +81,12 @@ services:
       - analytics_url
       - accedian_user
       - accedian_password
+    healthcheck:
+      test: "curl localhost:8000 || exit 1"
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 30s      
   nso-prod:
     image: cisco-nso-prod:6.1.11.2
     container_name: nso-prod
@@ -107,3 +125,25 @@ services:
       - type: bind
         source: NSO/packages
         target: /nso/run/packages
+  tester:
+    build:
+      context: Tester
+    container_name: Tester
+    profiles:
+      - prod
+    volumes:
+      - type: bind
+        source: "Tester"
+        target: "/app"
+    environment:
+      - webex_token
+      - NGROK_DOMAIN
+    depends_on:
+      webex:
+        condition: service_healthy
+      langchain:
+        condition: service_healthy
+      pca:
+        condition: service_healthy
+      nso-prod:
+        condition: service_healthy
