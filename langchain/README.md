@@ -1,23 +1,18 @@
-- sqlite3 >= 3.35.0 is required
 
-    download and build -> https://www.sqlite.org/download.html
+# QA API
+## description
 
+This code provides Web API for answering questions based on text-based knowledge.
 
-とりあえずベータ版
+It assume that the knowledge files are put under `../knowledge` directory.
 
-base-knowledge に前提情報として入れたい情報を記載した markdown とかを投入すると、
-それを loader が読み込んで、vectorstore にしてくれて、embedding までしてくれる。
+## pre requirement
 
-それをもとに chat OpenAI API でチャット形式の質問に答えてくれる
+To use Chroma, sqlite3 >= 3.35.0 is required.
+If you need to build it by yourself, download source from [here](https://www.sqlite.org/download.html) and follow the instruction.
 
-
-例えば、
-- target-device.md
-- ctc-network-op.md
-
-という二つの情報を与えて、
-障害リンクの両端の対象機と迂回手順を教えた
-
-そのとき
-「今回の障害の対象機は？」みたいに質問すると答えてくれるし、
-「経路迂回の手順は？」も教えてくれる
+Run the following code to confirm the sqlite3 version:
+```
+import sqlite3
+print(sqlite3.sqlite_version)
+```
