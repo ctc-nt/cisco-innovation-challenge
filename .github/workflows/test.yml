@@ -12,8 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build and run Docker Compose
-        run: |
-          docker compose --profile prod up -d
+        run: docker compose -f compose.yml -f compose-test.yml --profile ci up -d
       - name: upload artifact
         uses: actions/upload-artifact@v4
         with:

@@ -1,16 +1,18 @@
 import requests
 import os
+import pytest
 
 def test_get_request_cardAction():
-    url = f"https://{os.environ.get("NGROK_DOMAIN")}/cardAction"
+    url = f"http://webex:8000/cardAction"
     response = requests.get(url)
     assert response.status_code == 405
 
 def test_get_request_message():
-    url = f"https://{os.environ.get("NGROK_DOMAIN")}/message"
+    url = f"http://webex:8000/message"
     response = requests.get(url)
     assert response.status_code == 405
 
+@pytest.mark.ci
 def test_get_webex_hook():
     url = "https://webexapis.com/v1/webhooks"
 
