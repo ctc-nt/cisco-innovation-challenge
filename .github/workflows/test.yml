@@ -3,7 +3,7 @@ name: Test Actions
 on:
   push:
     branches:
-      - "*"
+      - "feature/github-actions-test"
 
 jobs:
   build:
