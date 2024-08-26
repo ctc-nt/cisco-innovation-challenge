@@ -1,8 +1,15 @@
 version: '3'
+volumes:
+  NSO-vol:
+
+
 services:
   webex:
     build:
       context: webex
+    container_name: webex
+    profiles:
+      - prod
     ports:
       - 8000:8000
     volumes:
@@ -13,8 +20,11 @@ services:
       - webex_token
       - bot_email
   langchain:
-    build: 
+    build:
       context: langchain
+    container_name: langchain
+    profiles:
+      - prod
     ports:
       - 8001:8000
     volumes:
@@ -31,8 +41,11 @@ services:
       - OPENAI_API_KEY
       - LD_LIBRARY_PATH=/app/.libs/
   pca:
-    build: 
+    build:
       context: PCA
+    container_name: pca
+    profiles:
+      - prod
     ports:
       - 8002:8000
     volumes:
@@ -43,3 +56,43 @@ services:
       - analytics_url
       - accedian_user
       - accedian_password
+
+  nso-prod:
+    image: cisco-nso-prod:6.1.11.2
+    container_name: nso-prod
+    profiles:
+      - prod
+    environment:
+      - EXTRA_ARGS=--with-package-reload
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=admin
+    ports:
+      - "2024:2024"
+      - "8888:8888"
+    volumes:
+      - type: bind
+        source: NSO/packages
+        target: /nso/run/packages
+      - type: bind
+        source: NSO/log
+        target: /log
+      - type: volume
+        source: NSO-vol
+        target: /nso
+    healthcheck:
+      test: ncs_cmd -c "wait-start 2"
+      interval: 5s
+      retries: 5
+      start_period: 10s
+      timeout: 10s
+
+  nso-dev:
+    image: cisco-nso-dev:6.1.11.2
+    container_name: nso-dev
+    network_mode: none
+    profiles:
+      - dev
+    volumes:
+      - type: bind
+        source: NSO/packages
+        target: /nso/run/packages
