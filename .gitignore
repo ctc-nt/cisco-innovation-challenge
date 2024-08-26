@@ -7,3 +7,6 @@ __pycache__
 langchain/.libs
 *.fxs
 NSO/packages/cisco-ios-cli-3.8
+log.html
+output.xml
+report.html

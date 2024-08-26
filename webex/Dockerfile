@@ -1,6 +1,7 @@
 FROM python:3.12.4-slim-bullseye
 
 WORKDIR /app
+RUN apt update && apt install curl -y
 COPY pyproject.toml poetry.lock /app/
 RUN pip install poetry
 RUN poetry install --no-cache
