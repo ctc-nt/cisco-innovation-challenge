@@ -2,8 +2,8 @@ name: Test Actions
 
 on:
   push:
-    branches:
-      - dev
+    branches-ignore:
+      - '*'
 
 jobs:
   build:
