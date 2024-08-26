@@ -19,6 +19,23 @@ services:
     environment:
       - webex_token
       - bot_email
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: ngrok
+    command:
+      - "start"
+      - "--all"
+      - "--config"
+      - "/etc/ngrok.yml"
+    environment:
+      NGROK_AUTHTOKEN:
+        ${NGROK_AUTHTOKEN}
+    ports:
+      - 4040:4040
+    volumes:
+      - type: bind
+        source: "webex/ngrok.yml"
+        target: "/etc/ngrok.yml"
   langchain:
     build:
       context: langchain
@@ -56,7 +73,6 @@ services:
       - analytics_url
       - accedian_user
       - accedian_password
-
   nso-prod:
     image: cisco-nso-prod:6.1.11.2
     container_name: nso-prod
@@ -85,7 +101,6 @@ services:
       retries: 5
       start_period: 10s
       timeout: 10s
-
   nso-dev:
     image: cisco-nso-dev:6.1.11.2
     container_name: nso-dev

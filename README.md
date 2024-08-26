@@ -53,15 +53,16 @@ For Detail, See webex/webex.rest and webex/ngrok-startup.sh
 Make .env file with following example
 
 ```
-export webex_token = your_token
-export bot_email = your_email
-export analytics_url=your_url
-export accedian_user=your_user
-export accedian_password=your_password
-export TF_VAR_cml_address=your_address
-export TF_VAR_cml_password=your_password
-export TF_VAR_cml_user=your_user
-export OPENAI_API_KEY=your_API_KEY
+webex_token = your_token
+bot_email = your_email
+analytics_url=your_url
+accedian_user=your_user
+accedian_password=your_password
+TF_VAR_cml_address=your_address
+TF_VAR_cml_password=your_password
+TF_VAR_cml_user=your_user
+OPENAI_API_KEY=your_API_KEY
+NGROK_AUTHTOKEN=your_token
 ```
 
 Run docker compose

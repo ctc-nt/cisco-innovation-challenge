@@ -1,1 +1,0 @@
-ngrok http --domain=mistakenly-deciding-antelope.ngrok-free.app 8000 > /dev/null &
