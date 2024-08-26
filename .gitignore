@@ -6,3 +6,4 @@ __pycache__
 .env
 langchain/.libs
 *.fxs
+NSO/packages/cisco-ios-cli-3.8
