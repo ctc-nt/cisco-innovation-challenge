@@ -53,9 +53,6 @@ services:
       - type: bind
         source: "knowledge"
         target: "/app/knowledge"
-      - type: bind
-        source: "langchain/.libs"
-        target: "/app/.libs"
     environment:
       - OPENAI_API_KEY
       - LD_LIBRARY_PATH=/app/.libs/
