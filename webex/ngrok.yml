@@ -1,9 +1,0 @@
-version: 2
-tunnels:
-  webex:
-    addr: webex:8000
-    schemes:
-      - https
-    inspect: false
-    proto: http
-    domain: mistakenly-deciding-antelope.ngrok-free.app

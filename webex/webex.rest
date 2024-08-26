@@ -10,7 +10,7 @@ Content-Type: application/json
     "name": "Webhook to Chatbot",
     "resource": "messages",
     "event": "created",
-    "targetUrl": "https://mistakenly-deciding-antelope.ngrok-free.app/message"
+    "targetUrl": "https://{{$dotenv NGROK_DOMAIN}}/message"
 }
 
 ### for CardAction
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 {
   "name": "My Attachment Action Webhook",
-  "targetUrl": "https://mistakenly-deciding-antelope.ngrok-free.app/cardAction",
+  "targetUrl": "https://{{$dotenv NGROK_DOMAIN}}/cardAction",
   "resource": "attachmentActions",
   "event": "created"
 }

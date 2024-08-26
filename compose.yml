@@ -22,20 +22,16 @@ services:
   ngrok:
     image: ngrok/ngrok:latest
     container_name: ngrok
+    profiles:
+      - prod
     command:
-      - "start"
-      - "--all"
-      - "--config"
-      - "/etc/ngrok.yml"
+      - "http"
+      - "--domain=${NGROK_DOMAIN}"
+      - "webex:8000"
     environment:
-      NGROK_AUTHTOKEN:
-        ${NGROK_AUTHTOKEN}
+      - NGROK_AUTHTOKEN
     ports:
       - 4040:4040
-    volumes:
-      - type: bind
-        source: "webex/ngrok.yml"
-        target: "/etc/ngrok.yml"
   langchain:
     build:
       context: langchain
