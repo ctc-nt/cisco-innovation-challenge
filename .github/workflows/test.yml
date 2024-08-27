@@ -24,19 +24,31 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
  
-      - name: Extract metadata for LangChain
+      # - name: Extract metadata for LangChain
+      #   id: meta
+      #   uses: docker/metadata-action@v5
+      #   with:
+      #     images: twatanabe0808/cic2024-langchain
+
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: ./langchain
+      #     push: true
+      #     tags: ${{ steps.meta.outputs.tags }}
+
+      - name: Extract metadata for webex
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: twatanabe0808/cic2024-langchain
-
+          images: twatanabe0808/cic2024-webex
+    
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./langchain
+          context: ./webex
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-
+          tags: ${{ steps.meta.outputs.tags }}          
 
       # - name: Build and run Docker Compose
       #   run: docker compose -f compose.yml -f compose-test.yml --profile ci up -d
