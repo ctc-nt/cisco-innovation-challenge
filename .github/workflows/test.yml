@@ -3,7 +3,7 @@ name: Test Actions
 on:
   push:
     branches:
-      - "fix-test"
+      - "fix-ci"
   pull_request:
     branches:
       - dev
