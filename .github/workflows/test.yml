@@ -41,7 +41,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/cic2024-webex
+          images: ghcr.io/${{github.repository}}/cic2024-webex
     
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
