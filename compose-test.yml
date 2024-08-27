@@ -1,7 +1,85 @@
 version: '3'
 
+volumes:
+  NSO-vol:
+
 services:
+  webex:
+    image: ghcr.io/ctc-nt/cisco-innovation-challenge/cic2024-webex:${GITHUB_REF}
+    container_name: webex
+    profiles:
+      - ci
+    ports:
+      - 8000:8000
+    volumes:
+      - type: bind
+        source: "webex"
+        target: "/app"
+    environment:
+      - webex_token
+      - bot_email
+    healthcheck:
+      test: "curl localhost:8000 || exit 1"
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+  langchain:
+    image: ghcr.io/ctc-nt/cisco-innovation-challenge/cic2024-langchain:${GITHUB_REF}
+    container_name: langchain
+    profiles:
+      - ci
+    ports:
+      - 8001:8000
+    volumes:
+      - type: bind
+        source: "langchain"
+        target: "/app"
+      - type: bind
+        source: "knowledge"
+        target: "/app/knowledge"
+    environment:
+      - OPENAI_API_KEY
+      - LD_LIBRARY_PATH=/app/.libs/
+    healthcheck:
+      test: "curl localhost:8000 || exit 1"
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+  pca:
+    image: ghcr.io/ctc-nt/cisco-innovation-challenge/cic2024-pca:${GITHUB_REF}
+    container_name: pca
+    profiles:
+      - ci
+    ports:
+      - 8002:8000
+    volumes:
+      - type: bind
+        source: "PCA"
+        target: "/app"
+    environment:
+      - analytics_url
+      - accedian_user
+      - accedian_password
+    healthcheck:
+      test: "curl localhost:8000 || exit 1"
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
   tester:
+    image: ghcr.io/ctc-nt/cisco-innovation-challenge/cic2024-tester:${GITHUB_REF}
+    container_name: Tester
+    profiles:
+      - ci
+    volumes:
+      - type: bind
+        source: "Tester"
+        target: "/app"
+    environment:
+      - webex_token
+      - NGROK_DOMAIN
     depends_on:
       webex:
         condition: service_healthy
@@ -9,5 +87,3 @@ services:
         condition: service_healthy
       pca:
         condition: service_healthy
-    command:
-      - pytest

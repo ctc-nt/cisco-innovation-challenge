@@ -10,7 +10,6 @@ services:
     container_name: webex
     profiles:
       - prod
-      - ci
     ports:
       - 8000:8000
     volumes:
@@ -45,7 +44,6 @@ services:
     container_name: langchain
     profiles:
       - prod
-      - ci
     ports:
       - 8001:8000
     volumes:
@@ -70,7 +68,6 @@ services:
     container_name: pca
     profiles:
       - prod
-      - ci
     ports:
       - 8002:8000
     volumes:
@@ -131,7 +128,6 @@ services:
     container_name: Tester
     profiles:
       - prod
-      - ci
     volumes:
       - type: bind
         source: "Tester"
