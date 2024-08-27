@@ -26,7 +26,7 @@ jobs:
           password: ${{ github.token }} 
           
       - name: Extract metadata for webex
-        id: meta
+        id: meta_webex
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{github.repository}}/cic2024-webex
@@ -36,12 +36,12 @@ jobs:
         with:
           context: ./webex
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta_webex.outputs.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Extract metadata for langchain
-        id: meta
+        id: meta_langchain
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{github.repository}}/cic2024-langchain
@@ -51,12 +51,12 @@ jobs:
         with:
           context: ./langchain
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta_langchain.outputs.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
               
       - name: Extract metadata for pca
-        id: meta
+        id: meta_pca
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{github.repository}}/cic2024-pca
@@ -66,12 +66,12 @@ jobs:
         with:
           context: ./pca
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta_pca.outputs.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
               
       - name: Extract metadata for tester
-        id: meta
+        id: meta_tester
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{github.repository}}/cic2024-tester
@@ -81,7 +81,7 @@ jobs:
         with:
           context: ./Tester
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta_tester.outputs.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
   
