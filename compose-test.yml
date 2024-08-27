@@ -3,11 +3,10 @@ volumes:
 
 services:
   webex:
-    build:
-      context: webex
+    image: ghcr.io/ctc-nt/cisco-innovation-challenge/webex:${GITHUB_REF_NAME}
     container_name: webex
     profiles:
-      - prod
+      - ci
     ports:
       - 8000:8000
     volumes:
@@ -23,25 +22,11 @@ services:
       timeout: 30s
       retries: 5
       start_period: 30s
-  ngrok:
-    image: ngrok/ngrok:latest
-    container_name: ngrok
-    profiles:
-      - prod
-    command:
-      - "http"
-      - "--domain=${NGROK_DOMAIN}"
-      - "webex:8000"
-    environment:
-      - NGROK_AUTHTOKEN
-    ports:
-      - 4040:4040
   langchain:
-    build:
-      context: langchain
+    image: ghcr.io/ctc-nt/cisco-innovation-challenge/langchain:${GITHUB_REF_NAME}
     container_name: langchain
     profiles:
-      - prod
+      - ci
     ports:
       - 8001:8000
     volumes:
@@ -61,11 +46,10 @@ services:
       retries: 5
       start_period: 30s
   pca:
-    build:
-      context: PCA
+    image: ghcr.io/ctc-nt/cisco-innovation-challenge/pca:${GITHUB_REF_NAME}
     container_name: pca
     profiles:
-      - prod
+      - ci
     ports:
       - 8002:8000
     volumes:
@@ -81,51 +65,12 @@ services:
       interval: 10s
       timeout: 30s
       retries: 5
-      start_period: 30s      
-  nso-prod:
-    image: cisco-nso-prod:6.1.11.2
-    container_name: nso-prod
-    profiles:
-      - prod
-    environment:
-      - EXTRA_ARGS=--with-package-reload
-      - ADMIN_USERNAME=admin
-      - ADMIN_PASSWORD=admin
-    ports:
-      - "2024:2024"
-      - "8888:8888"
-    volumes:
-      - type: bind
-        source: NSO/packages
-        target: /nso/run/packages
-      - type: bind
-        source: NSO/log
-        target: /log
-      - type: volume
-        source: NSO-vol
-        target: /nso
-    healthcheck:
-      test: ncs_cmd -c "wait-start 2"
-      interval: 5s
-      retries: 5
-      start_period: 10s
-      timeout: 10s
-  nso-dev:
-    image: cisco-nso-dev:6.1.11.2
-    container_name: nso-dev
-    network_mode: none
-    profiles:
-      - dev
-    volumes:
-      - type: bind
-        source: NSO/packages
-        target: /nso/run/packages
+      start_period: 30s
   tester:
-    build:
-      context: Tester
-    container_name: Tester
+    image: ghcr.io/ctc-nt/cisco-innovation-challenge/tester:${GITHUB_REF_NAME}
+    container_name: tester
     profiles:
-      - prod
+      - ci
     volumes:
       - type: bind
         source: "Tester"
@@ -136,5 +81,7 @@ services:
     depends_on:
       webex:
         condition: service_healthy
+      langchain:
+        condition: service_healthy
       pca:
-        condition: service_healthy    
+        condition: service_healthy

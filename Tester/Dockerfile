@@ -6,4 +6,4 @@ RUN pip install poetry
 RUN poetry install --no-cache
 
 ENTRYPOINT [ "poetry", "run" ]
-CMD ["pytest", "-vvv"]
+CMD ["pytest", "-v"]
