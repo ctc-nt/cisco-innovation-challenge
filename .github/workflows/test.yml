@@ -37,8 +37,8 @@ jobs:
           context: ./webex
           push: true
           tags: ${{ steps.meta_webex.outputs.tags }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ steps.meta_webex.outputs.tags }}-cache
+          cache-to: type=registry,ref=${{ steps.meta_webex.outputs.tags }}-cache,mode=max
 
       - name: Extract metadata for langchain
         id: meta_langchain
@@ -52,8 +52,8 @@ jobs:
           context: ./langchain
           push: true
           tags: ${{ steps.meta_langchain.outputs.tags }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ steps.meta_langchain.outputs.tags }}-cache
+          cache-to: type=registry,ref=${{ steps.meta_langchain.outputs.tags }}-cache,mode=max
               
       - name: Extract metadata for pca
         id: meta_pca
@@ -67,8 +67,8 @@ jobs:
           context: ./PCA
           push: true
           tags: ${{ steps.meta_pca.outputs.tags }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ steps.meta_pca.outputs.tags }}-cache
+          cache-to: type=registry,ref=${{ steps.meta_pca.outputs.tags }}-cache,mode=max
               
       - name: Extract metadata for tester
         id: meta_tester
@@ -82,8 +82,8 @@ jobs:
           context: ./Tester
           push: true
           tags: ${{ steps.meta_tester.outputs.tags }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ steps.meta_tester.outputs.tags }}-cache
+          cache-to: type=registry,ref=${{ steps.meta_tester.outputs.tags }}-cache,mode=max
   
       # - name: Build and run Docker Compose
       #   run: docker compose -f compose.yml -f compose-test.yml --profile ci up -d
