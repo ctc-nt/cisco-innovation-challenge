@@ -89,10 +89,11 @@ jobs:
         run: docker compose -f compose-test.yml --profile ci up -d --exit-code-from tester
 
       - name: Troubleshoot
+        if: ${{ always() }}
         run: docker compose logs tester; ls -la; ls -la Tester
 
-
       - name: upload artifact
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: log.html
