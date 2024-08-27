@@ -3,7 +3,22 @@ name: Test Actions
 on:
   push:
     branches:
-      - "dev"
+      - "fix-test"
+  pull_request:
+    branches:
+      - dev
+      - main
+    types:
+      - closed
+env:
+  webex_token: ${{ secrets.WEBEX_TOKEN }}
+  bot_email: ${{ secrets.BOT_EMAIL }}
+  analytics_url: ${{ secrets.ANALYTICS_URL }}
+  accedian_user: ${{ secrets.ACCEDIAN_USER }}
+  accedian_password: ${{ secrets.ACCEDIAN_PASSWORD }}
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
+  NGROK_DOMAIN: ${{ secrets.NGROK_DOMAIN }}
 
 jobs:
   build:
@@ -86,7 +101,7 @@ jobs:
           cache-to: type=registry,ref=${{ steps.meta_tester.outputs.tags }}-cache,mode=max
   
       - name: Build and run Docker Compose
-        run: docker compose -f compose-test.yml --profile ci up --exit-code-from tester
+        run: docker compose -f compose-ci.yml --profile ci up --exit-code-from tester
 
       - name: Troubleshoot
         if: ${{ always() }}

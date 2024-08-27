@@ -1,3 +1,5 @@
+version: '3.8'
+
 volumes:
   NSO-vol:
 
@@ -123,7 +125,7 @@ services:
   tester:
     build:
       context: Tester
-    container_name: Tester
+    container_name: tester
     profiles:
       - prod
     volumes:
@@ -137,4 +139,4 @@ services:
       webex:
         condition: service_healthy
       pca:
-        condition: service_healthy    
+        condition: service_healthy
