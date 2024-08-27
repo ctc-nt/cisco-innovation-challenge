@@ -90,7 +90,7 @@ jobs:
 
       - name: Troubleshoot
         if: ${{ always() }}
-        run: docker compose logs tester; ls -la; ls -la Tester
+        run: docker compose logs tester; ls -la; ls -la Tester;env
 
       - name: upload artifact
         if: ${{ always() }}
