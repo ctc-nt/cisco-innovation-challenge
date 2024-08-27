@@ -86,7 +86,7 @@ jobs:
           cache-to: type=registry,ref=${{ steps.meta_tester.outputs.tags }}-cache,mode=max
   
       - name: Build and run Docker Compose
-        run: docker compose -f compose-test.yml --profile ci up -d --exit-code-from tester
+        run: docker compose -f compose-test.yml --profile ci up --exit-code-from tester
 
       - name: Troubleshoot
         if: ${{ always() }}
