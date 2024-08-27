@@ -68,7 +68,7 @@ services:
       start_period: 30s
   tester:
     image: ghcr.io/ctc-nt/cisco-innovation-challenge/tester:${GITHUB_REF_NAME}
-    container_name: Tester
+    container_name: tester
     profiles:
       - ci
     volumes:
