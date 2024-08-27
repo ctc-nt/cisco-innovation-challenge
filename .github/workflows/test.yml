@@ -3,7 +3,7 @@ name: Test Actions
 on:
   push:
     branches:
-      - "feature/github-actions-test"
+      - "github-actions-test"
 
 jobs:
   build:
@@ -29,7 +29,7 @@ jobs:
         id: meta_webex
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{github.repository}}/cic2024-webex
+          images: ghcr.io/${{github.repository}}/webex
         
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -44,7 +44,7 @@ jobs:
         id: meta_langchain
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{github.repository}}/cic2024-langchain
+          images: ghcr.io/${{github.repository}}/langchain
             
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -59,7 +59,7 @@ jobs:
         id: meta_pca
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{github.repository}}/cic2024-pca
+          images: ghcr.io/${{github.repository}}/pca
                 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -74,7 +74,7 @@ jobs:
         id: meta_tester
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{github.repository}}/cic2024-tester
+          images: ghcr.io/${{github.repository}}/tester
                   
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -87,6 +87,7 @@ jobs:
   
       - name: Build and run Docker Compose
         run: docker compose -f compose-test.yml --profile ci up -d
+
       - name: upload artifact
         uses: actions/upload-artifact@v4
         with:
