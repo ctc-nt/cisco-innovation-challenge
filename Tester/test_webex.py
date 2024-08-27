@@ -2,11 +2,13 @@ import requests
 import os
 import pytest
 
+@pytest.mark.ci
 def test_get_request_cardAction():
     url = f"http://webex:8000/cardAction"
     response = requests.get(url)
     assert response.status_code == 405
 
+@pytest.mark.ci
 def test_get_request_message():
     url = f"http://webex:8000/message"
     response = requests.get(url)
