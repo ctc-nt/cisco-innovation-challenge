@@ -12,7 +12,6 @@ def test_get_request_message():
     response = requests.get(url)
     assert response.status_code == 405
 
-@pytest.mark.ci
 def test_get_webex_hook():
     url = "https://webexapis.com/v1/webhooks"
 
