@@ -88,6 +88,10 @@ jobs:
       - name: Build and run Docker Compose
         run: docker compose -f compose-test.yml --profile ci up -d
 
+      - name: Troubleshoot
+        run: docker compose logs tester; ls -la; ls -la Tester
+
+
       - name: upload artifact
         uses: actions/upload-artifact@v4
         with:
