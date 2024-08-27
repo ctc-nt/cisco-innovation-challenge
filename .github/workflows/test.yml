@@ -64,7 +64,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./pca
+          context: ./PCA
           push: true
           tags: ${{ steps.meta_pca.outputs.tags }}
           cache-from: type=gha
