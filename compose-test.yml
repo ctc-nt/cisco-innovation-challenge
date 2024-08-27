@@ -85,5 +85,3 @@ services:
         condition: service_healthy
       pca:
         condition: service_healthy
-    command:
-      - tail -f /dev/null 
