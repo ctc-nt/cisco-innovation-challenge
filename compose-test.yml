@@ -5,7 +5,7 @@ volumes:
 
 services:
   webex:
-    image: ghcr.io/ctc-nt/cisco-innovation-challenge/cic2024-webex:${GITHUB_REF}
+    image: ghcr.io/ctc-nt/cisco-innovation-challenge/cic2024-webex:${GITHUB_REF_NAME}
     container_name: webex
     profiles:
       - ci
@@ -25,7 +25,7 @@ services:
       retries: 5
       start_period: 30s
   langchain:
-    image: ghcr.io/ctc-nt/cisco-innovation-challenge/cic2024-langchain:${GITHUB_REF}
+    image: ghcr.io/ctc-nt/cisco-innovation-challenge/cic2024-langchain:${GITHUB_REF_NAME}
     container_name: langchain
     profiles:
       - ci
@@ -48,7 +48,7 @@ services:
       retries: 5
       start_period: 30s
   pca:
-    image: ghcr.io/ctc-nt/cisco-innovation-challenge/cic2024-pca:${GITHUB_REF}
+    image: ghcr.io/ctc-nt/cisco-innovation-challenge/cic2024-pca:${GITHUB_REF_NAME}
     container_name: pca
     profiles:
       - ci
@@ -69,7 +69,7 @@ services:
       retries: 5
       start_period: 30s
   tester:
-    image: ghcr.io/ctc-nt/cisco-innovation-challenge/cic2024-tester:${GITHUB_REF}
+    image: ghcr.io/ctc-nt/cisco-innovation-challenge/cic2024-tester:${GITHUB_REF_NAME}
     container_name: Tester
     profiles:
       - ci
