@@ -24,25 +24,13 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ github.token }} 
-      # - name: Extract metadata for LangChain
-      #   id: meta
-      #   uses: docker/metadata-action@v5
-      #   with:
-      #     images: twatanabe0808/cic2024-langchain
-
-      # - name: Build and push Docker image
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: ./langchain
-      #     push: true
-      #     tags: ${{ steps.meta.outputs.tags }}
-
+          
       - name: Extract metadata for webex
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{github.repository}}/cic2024-webex
-    
+        
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -52,6 +40,51 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Extract metadata for langchain
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{github.repository}}/cic2024-langchain
+            
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./langchain
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+              
+      - name: Extract metadata for pca
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{github.repository}}/cic2024-pca
+                
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./pca
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+              
+      - name: Extract metadata for tester
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{github.repository}}/cic2024-tester
+                  
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./Tester
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+  
       # - name: Build and run Docker Compose
       #   run: docker compose -f compose.yml -f compose-test.yml --profile ci up -d
       # - name: upload artifact
