@@ -46,7 +46,7 @@ def post_qa_card(room_id):
                     "body": [
                         {
                             "type": "TextBlock",
-                            "text": "Hello, I'm AI Assistant",
+                            "text": "Network AI Assistant",
                             "wrap": True,
                             "fontType": "Monospace",
                             "size": "ExtraLarge",
