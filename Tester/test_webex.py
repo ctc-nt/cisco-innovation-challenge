@@ -2,6 +2,11 @@ import requests
 import os
 import pytest
 
+def test_get_request_root():
+    url = f"http://webex:8000/"
+    response = requests.get(url)
+    assert response.status_code == 200
+
 def test_get_request_cardAction():
     url = f"http://webex:8000/cardAction"
     response = requests.get(url)
