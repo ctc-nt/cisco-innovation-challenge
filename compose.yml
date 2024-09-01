@@ -122,6 +122,28 @@ services:
       - type: bind
         source: NSO/packages
         target: /nso/run/packages
+  cml:
+    build:
+      context: CML
+    container_name: cml
+    profiles:
+      - prod
+    ports:
+      - 8003:8000
+    volumes:
+      - type: bind
+        source: "CML"
+        target: "/app"
+    environment:
+      - TF_VAR_cml_address
+      - TF_VAR_cml_password
+      - TF_VAR_cml_user
+    healthcheck:
+      test: "curl localhost:8000 || exit 1"
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 30s        
   tester:
     build:
       context: Tester
@@ -138,5 +160,9 @@ services:
     depends_on:
       webex:
         condition: service_healthy
+      langchain:
+        condition: service_healthy
       pca:
+        condition: service_healthy
+      cml:
         condition: service_healthy

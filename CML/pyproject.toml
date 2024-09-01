@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "test"
+name = "cml"
 version = "0.1.0"
 description = ""
 authors = ["Tomoya Watanabe <tomoya.watanabe@ctc-g.co.jp>"]
@@ -7,10 +7,13 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-pytest = "^8.3.2"
-requests = "^2.32.3"
-pytest-robotframework = "^4.2.4"
+fastapi = "^0.112.2"
+uvicorn = "^0.30.6"
+python-terraform = "^0.10.1"
 
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.26.0"
 
 [build-system]
 requires = ["poetry-core"]
