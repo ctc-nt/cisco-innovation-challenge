@@ -31,7 +31,7 @@ def post_message(room_id, format, message):
     response = requests.post(url, headers=headers, data=json.dumps(payload))
 
 
-def post_card(room_id):
+def post_qa_card(room_id):
     url = f"https://webexapis.com/v1/messages/"
     payload = {
         "roomId": room_id,
@@ -86,8 +86,7 @@ async def message(message: Dict):
     if message.get("data").get("personEmail") != os.environ.get('bot_email'):
         room_id = message.get("data").get("roomId")
         print(json.dumps(message, indent=2))
-        post_card(room_id)
-        # Backendは根本になると思う
+        post_qa_card(room_id)
 
 
 @app.post("/cardAction")
@@ -99,5 +98,3 @@ async def cardAction(message: Dict):
         post_message(room_id, "markdown", f"Thank you for asking me！ I am generating answer regarding **{response.get('input')}**,  Stay Tune!!")
         response = requests.post("http://langchain:8000/query", json=response)
         post_message(room_id, "markdown", response.json().get("answer"))
-        if "https" in response.json().get("answer"):
-            post_message(room_id, "text", f"APIはこっから叩けるよ。まだだけど。({response.json().get('answer')})")
