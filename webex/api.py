@@ -46,7 +46,7 @@ def post_card(room_id):
                     "body": [
                         {
                             "type": "TextBlock",
-                            "text": "質問したい内容を入力してください",
+                            "text": "Hello, I'm AI Assistant",
                             "wrap": True,
                             "fontType": "Monospace",
                             "size": "ExtraLarge",
@@ -54,21 +54,8 @@ def post_card(room_id):
                             "color": "Dark",
                         },
                         {
-                            "type": "Input.ChoiceSet",
-                            "choices": [
-                                {"title": "Deploy Network", "value": "deploy"},
-                                {
-                                    "title": "Troubleshoot Network",
-                                    "value": "troubleshoot",
-                                },
-                            ],
-                            "placeholder": "Choose Operation",
-                            "style": "expanded",
-                            "id": "type",
-                        },
-                        {
                             "type": "Input.Text",
-                            "placeholder": "質問を入力してください",
+                            "placeholder": "Enter your question here",
                             "id": "input",
                             "value": "",
                         },
