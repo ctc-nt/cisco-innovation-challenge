@@ -27,9 +27,9 @@ These conditions will be automatically fulfilled after the devices are deployed 
 ## Device Credentials
 | Device Name | IP Address     | User  | Password | Secondary Password |
 |-------------|----------------|-------|----------|--------------------|
-| R1    | 192.168.23.14     | cisco | cisco  | cisco         |
-| R2    | 192.168.23.15     | cisco | cisco  | cisco         |
-| R3    | 192.168.23.16     | cisco | cisco  | cisco         |
+| R1    | 192.168.132.14     | cisco | cisco  | cisco         |
+| R2    | 192.168.132.15     | cisco | cisco  | cisco         |
+| R3    | 192.168.132.16     | cisco | cisco  | cisco         |
 
 # NSO service model
 This directory contains two NSO sevice-models

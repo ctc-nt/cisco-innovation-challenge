@@ -1,0 +1,114 @@
+### GET cic-l3
+
+GET http://admin:admin@localhost:8080/restconf/data/cic-l3:cic-l3/
+Accept: application/yang-data+json
+
+### GET cic-bgp
+
+GET http://admin:admin@localhost:8080/restconf/data/cic-bgp:cic-bgp/
+Accept: application/yang-data+json
+
+
+
+### POST single
+
+POST http://admin:admin@localhost:8080/restconf/data/
+Content-Type: application/yang-data+json
+Accept: application/yang-data+json
+
+{
+    "cic-l3:cic-l3":{
+            "name": "hoge",
+            "device1": "R1",
+            "device2": "R2",
+            "device3": "R3",
+            "ipv4-address-loopback-dev1": "1.1.1.1",
+            "ipv4-address-loopback-dev2": "2.2.2.2",
+            "ipv4-address-loopback-dev3": "3.3.3.3"
+    }
+}
+
+### POST2 multi
+
+POST http://admin:admin@localhost:8080/restconf/data/
+Content-Type: application/yang-data+json
+Accept: application/yang-data+json
+
+{
+    "cic-l3:cic-l3": [
+        {
+            "name": "hoge",
+            "device1": "R1",
+            "device2": "R2",
+            "device3": "R3",
+            "ipv4-address-loopback-dev1": "1.1.1.1",
+            "ipv4-address-loopback-dev2": "2.2.2.2",
+            "ipv4-address-loopback-dev3": "3.3.3.3"
+        }
+    ]
+}
+
+### DELETE cic-l3
+
+DELETE http://admin:admin@localhost:8080/restconf/data/cic-l3:cic-l3=hoge/
+
+
+### DELETE cic-bgp
+
+DELETE http://admin:admin@localhost:8080/restconf/data/cic-bgp:cic-bgp=fuga/
+
+
+### POST cic-l3
+
+POST http://admin:admin@localhost:8080/restconf/data/
+Content-Type: application/yang-data+json
+Accept: application/yang-data+json
+
+{
+    "cic-l3:cic-l3":{
+            "name": "hoge",
+            "device1": "R1",
+            "device2": "R2",
+            "device3": "R3",
+            "ipv4-address-loopback-dev1": "1.1.1.1",
+            "ipv4-address-loopback-dev2": "2.2.2.2",
+            "ipv4-address-loopback-dev3": "3.3.3.3"
+    }
+}
+
+### POST cic-bgp
+
+POST http://admin:admin@localhost:8080/restconf/data/
+Content-Type: application/yang-data+json
+Accept: application/yang-data+json
+
+{
+  "cic-bgp:cic-bgp": [
+    {
+      "name": "fuga",
+      "device1": "R1",
+      "device2": "R2",
+      "device3": "R3",
+      "asn-dev1": 65001,
+      "asn-dev2": 65002,
+      "asn-dev3": 65003,
+      "adv-route-dev1": "192.168.10.0",
+      "adv-mask-dev1": "255.255.255.0",
+      "adv-route-dev2": "192.168.20.0",
+      "adv-mask-dev2": "255.255.255.0",
+      "adv-route-dev3": "192.168.30.0",
+      "adv-mask-dev3": "255.255.255.0"
+    }
+  ]
+}
+
+
+### GET cic-l3
+
+GET http://admin:admin@localhost:8080/restconf/data/cic-l3:cic-l3/
+Accept: application/yang-data+json
+
+### GET cic-bgp
+
+GET http://admin:admin@localhost:8080/restconf/data/cic-bgp:cic-bgp/
+Accept: application/yang-data+json

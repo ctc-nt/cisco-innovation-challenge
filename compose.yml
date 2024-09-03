@@ -95,8 +95,11 @@ services:
       - ADMIN_PASSWORD=admin
     ports:
       - "2024:2024"
-      - "8888:8888"
+      - "8080:8080"
     volumes:
+      - type: bind
+        source: NSO/ncs.conf
+        target: /etc/ncs/ncs.conf
       - type: bind
         source: NSO/packages
         target: /nso/run/packages
