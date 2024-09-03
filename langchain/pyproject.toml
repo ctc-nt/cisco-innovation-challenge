@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "cic_langchain"
+version = "0.1.0"
+description = "langchain for cic"
+authors = ["nt"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+langchain-openai = "^0.1.9"
+langchain = "^0.2.5"
+langchain-community = "^0.2.5"
+pypdf = "^4.2.0"
+cryptography = "^43.0.0"
+chromadb = "^0.5.5"
+gitpython = "^3.1.43"
+google-api-python-client = "^2.138.0"
+fastapi = "^0.112.0"
+uvicorn = "^0.30.5"
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.25.0"
+black = "^24.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

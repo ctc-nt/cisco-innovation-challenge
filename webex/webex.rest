@@ -1,0 +1,120 @@
+@webex_token = {{$dotenv webex_token}}
+
+### for message
+
+POST  https://webexapis.com/v1/webhooks/
+Authorization: Bearer {{webex_token}}
+Content-Type: application/json
+
+{
+    "name": "Webhook to Chatbot",
+    "resource": "messages",
+    "event": "created",
+    "targetUrl": "https://{{$dotenv NGROK_DOMAIN}}/message"
+}
+
+### for CardAction
+
+POST  https://webexapis.com/v1/webhooks/
+Authorization: Bearer {{webex_token}}
+Content-Type: application/json
+
+{
+  "name": "My Attachment Action Webhook",
+  "targetUrl": "https://{{$dotenv NGROK_DOMAIN}}/cardAction",
+  "resource": "attachmentActions",
+  "event": "created"
+}
+
+
+### get Webhook List
+
+
+GET  https://webexapis.com/v1/webhooks  
+Authorization: Bearer {{webex_token}}
+Content-Type: application/json
+
+
+### get Webhook Detail
+
+DELETE  https://webexapis.com/v1/webhooks/Y2lzY29zcGFyazovL3VzL1dFQkhPT0svZjliMWQ5N2UtNWQ0YS00NDhlLWEyMWEtYWVkNjAwODExNGE0
+Authorization: Bearer {{webex_token}}
+Content-Type: application/json
+
+
+### get Message Detail
+
+GET  https://webexapis.com/v1/messages?roomId=Y2lzY29zcGFyazovL3VzL1JPT00vYTY0NWQ3ZjAtMWQ0OC0xMWVlLTgzNjctYmYxNmM1MjY5MTFh
+Authorization: Bearer {{webex_token}}
+Content-Type: application/json
+
+### post Message
+POST  https://webexapis.com/v1/messages/
+Authorization: Bearer {{webex_token}}
+Content-Type: application/json
+
+{
+    "roomId": "Y2lzY29zcGFyazovL3VzL1JPT00vYTY0NWQ3ZjAtMWQ0OC0xMWVlLTgzNjctYmYxNmM1MjY5MTFh",
+    "text": "I am a Bot!!"
+}
+
+### create card
+POST  https://webexapis.com/v1/messages/
+Authorization: Bearer {{webex_token}}
+Content-Type: application/json
+
+{
+  "roomId": "Y2lzY29zcGFyazovL3VzL1JPT00vZDkwY2RmYTAtNTNhYS0xMWVmLTlmMmMtMGZiMDRkODNjYmE2",
+  "markdown": "[Tell us about yourself](https://www.example.com/form/book-vacation). We just need a few more details to get you booked for the trip of a lifetime!",
+  "attachments": [
+    {
+      "contentType": "application/vnd.microsoft.card.adaptive",
+      "content": {
+        "type": "AdaptiveCard",
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "version": "1.3",
+        "body": [
+            {
+                "type": "TextBlock",
+                "text": "Network AI Assistant",
+                "wrap": true,
+                "fontType": "Monospace",
+                "size": "ExtraLarge",
+                "weight": "Bolder",
+                "color": "Dark"
+            },
+            {
+                "type": "Input.ChoiceSet",
+                "choices": [
+                    {
+                        "title": "Deploy Network",
+                        "value": "deploy"
+                    },
+                    {
+                        "title": "Troubleshoot Network",
+                        "value": "troubleshoot"
+                    }
+                ],
+                "placeholder": "Choose Operation",
+                "style": "expanded",
+                "id": "type"
+            },
+            {
+                "type": "Input.Text",
+                "placeholder": "Placeholder text",
+                "id": "input",
+                "value": "input your question"
+            }
+        ],
+        "actions": [
+            {
+                "type": "Action.Submit",
+                "title": "Submit",
+                "associatedInputs": "auto",
+                "id": "submit"
+            }
+        ]
+    }
+    }
+  ]
+}

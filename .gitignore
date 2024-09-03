@@ -1,0 +1,13 @@
+.terraform*
+*.tfstate
+*.tfstate.backup
+*.pyc
+__pycache__
+.env
+langchain/.libs
+*.fxs
+NSO/packages/cisco-ios-cli-3.8
+log.html
+output.xml
+report.html
+.python-version

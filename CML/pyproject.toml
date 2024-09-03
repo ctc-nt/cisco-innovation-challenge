@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "cml"
+version = "0.1.0"
+description = ""
+authors = ["Tomoya Watanabe <tomoya.watanabe@ctc-g.co.jp>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.112.2"
+uvicorn = "^0.30.6"
+python-terraform = "^0.10.1"
+
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.26.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

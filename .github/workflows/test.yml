@@ -1,0 +1,115 @@
+name: Test Actions
+
+on:
+  push:
+    branches:
+      - "fix-test"
+  pull_request:
+    branches:
+      - dev
+      - main
+    types:
+      - closed
+env:
+  webex_token: ${{ secrets.WEBEX_TOKEN }}
+  bot_email: ${{ secrets.BOT_EMAIL }}
+  analytics_url: ${{ secrets.ANALYTICS_URL }}
+  accedian_user: ${{ secrets.ACCEDIAN_USER }}
+  accedian_password: ${{ secrets.ACCEDIAN_PASSWORD }}
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
+  NGROK_DOMAIN: ${{ secrets.NGROK_DOMAIN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }} 
+          
+      - name: Extract metadata for webex
+        id: meta_webex
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{github.repository}}/webex
+        
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./webex
+          push: true
+          tags: ${{ steps.meta_webex.outputs.tags }}
+          cache-from: type=registry,ref=${{ steps.meta_webex.outputs.tags }}-cache
+          cache-to: type=registry,ref=${{ steps.meta_webex.outputs.tags }}-cache,mode=max
+
+      - name: Extract metadata for langchain
+        id: meta_langchain
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{github.repository}}/langchain
+            
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./langchain
+          push: true
+          tags: ${{ steps.meta_langchain.outputs.tags }}
+          cache-from: type=registry,ref=${{ steps.meta_langchain.outputs.tags }}-cache
+          cache-to: type=registry,ref=${{ steps.meta_langchain.outputs.tags }}-cache,mode=max
+              
+      - name: Extract metadata for pca
+        id: meta_pca
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{github.repository}}/pca
+                
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./PCA
+          push: true
+          tags: ${{ steps.meta_pca.outputs.tags }}
+          cache-from: type=registry,ref=${{ steps.meta_pca.outputs.tags }}-cache
+          cache-to: type=registry,ref=${{ steps.meta_pca.outputs.tags }}-cache,mode=max
+              
+      - name: Extract metadata for tester
+        id: meta_tester
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{github.repository}}/tester
+                  
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./Tester
+          push: true
+          tags: ${{ steps.meta_tester.outputs.tags }}
+          cache-from: type=registry,ref=${{ steps.meta_tester.outputs.tags }}-cache
+          cache-to: type=registry,ref=${{ steps.meta_tester.outputs.tags }}-cache,mode=max
+  
+      - name: Build and run Docker Compose
+        run: docker compose -f compose-ci.yml --profile ci up --exit-code-from tester
+
+      - name: Troubleshoot
+        if: ${{ always() }}
+        run: docker compose logs tester; ls -la; ls -la Tester;env
+
+      - name: upload artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: log.html
+          path: Tester/log.html
