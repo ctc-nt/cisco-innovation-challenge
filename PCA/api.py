@@ -1,10 +1,9 @@
 from fastapi import FastAPI
-from typing import Dict
+from fastapi import HTTPException
 import requests
-import json
 import os
 from urllib.parse import urlencode
-from datetime import datetime, UTC, timedelta
+from datetime import datetime
 
 app = FastAPI()
 
@@ -65,15 +64,17 @@ def get_monitored_objects(token: str):
 
 
 @app.post("/get_metrics")
-def get_monitored_objects(token: str, object_id: str, start: int, end: int):
+def get_metrics(token: str, object_id: str, start: int, end: int):
     url = f"https://{analytics_url}/api/v3/metrics/aggregate"
 
     headers = {
         "Cookie": f"skylight-aaa={token.split()[1]}",
     }
-
-    start = datetime.fromtimestamp(start).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
-    end   = datetime.fromtimestamp(end).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
+    try:
+        start = datetime.fromtimestamp(start).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
+        end   = datetime.fromtimestamp(end).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid timestamp")
 
     body = {
         "data": {
@@ -100,6 +101,11 @@ def get_monitored_objects(token: str, object_id: str, start: int, end: int):
             },
         }
     }
-    response = requests.post(url, headers=headers, json=body)
+    try:
+        response = requests.post(url, headers=headers, json=body)
+        response.raise_for_status()
+    except Exception as e:
+        print(e.args)
+        raise HTTPException(status_code=500, detail="Failed to retrieve metrics")
 
     return response.json()
