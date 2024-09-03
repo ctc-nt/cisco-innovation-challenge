@@ -20,7 +20,7 @@ logging.basicConfig(level=logging.INFO)
 app = FastAPI()
 
 def answer(query, dir_path, model):
-    llm = ChatOpenAI(model_name=model, temperature=0.2)
+    llm = ChatOpenAI(model_name=model, temperature=0)
 
     embedding = OpenAIEmbeddings()
 
